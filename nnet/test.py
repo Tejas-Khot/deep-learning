@@ -19,7 +19,7 @@ t_0=time.time()
 n_epochs=50
 training_portion=1
 batch_size=200
-nkerns=[50, 20]
+num_filters=[50, 20]
 
 
 X_train, Y_train, X_test, Y_test=utils.load_CIFAR10("/home/tejas/Desktop/cifar-10-batches-py")
@@ -72,7 +72,7 @@ images=X.reshape((batch_size, 1, 32, 32))
 
 # input size (32, 32), (7, 7)
 layer_0=ConvLayer(image_shape=(batch_size, 1, 32, 32),
-                 filter_shape=(nkerns[0], 1, 7, 7),
+                 filter_shape=(num_filters[0], 1, 7, 7),
                  pool=True,
                  activation_mode="relu")
 layer_0.initialize()
@@ -80,8 +80,8 @@ layer_0.apply_conv(images)
 filters=layer_0.W
 
 # input size (13, 13), (4, 4)
-layer_1=ConvLayer(image_shape=(batch_size, nkerns[0], 13, 13),
-                 filter_shape=(nkerns[1], nkerns[0], 4, 4),
+layer_1=ConvLayer(image_shape=(batch_size, num_filters[0], 13, 13),
+                 filter_shape=(num_filters[1], num_filters[0], 4, 4),
                  pool=True,
                  activation_mode="relu")
 layer_1.initialize()
@@ -89,7 +89,7 @@ layer_1.apply_conv(layer_0.get_output())
                  
 # output size (5, 5)
 layer_2=HiddenLayer(input=layer_1.get_output().flatten(2),
-                    n_in=nkerns[1]*25,
+                    n_in=num_filters[1]*25,
                     n_out=500)
 layer_2.initialize()
 

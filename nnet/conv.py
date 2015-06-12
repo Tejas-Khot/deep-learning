@@ -311,3 +311,21 @@ class MaxPooling(object):
         pooled_output=max_pool_2d(input=input, 
                                   ds=self.pooling_size)
         return pooled_output
+
+class Flattener(object):
+    """Flatten feature maps"""
+    
+    def apply(self, X):
+        """flatten feature map
+        
+        Parameters
+        ----------
+        X : 4D tensor
+            data with shape (batch_size, num_channels, height, width)
+            
+        Returns
+        -------
+        flatten_result : 2D matrix
+        """
+        
+        return X.flatten(ndim=2)        
