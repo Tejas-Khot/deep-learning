@@ -1,6 +1,6 @@
 #  -*- coding: utf-8 -*-
 from numpy import *
-import cPickle
+import cPickle as pickle
 from random import randrange
 import numpy as np
 #cifar_dir = '/home/habtegebrial/Desktop/python-destin/cifar-10-batches-py/'
