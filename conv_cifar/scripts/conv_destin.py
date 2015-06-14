@@ -41,7 +41,6 @@ alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
 
 #Load Data, 10 loads 5 batches in total 50,000
 # 1 to 5 load batch_1 to batch_5training images, 1 to five
-cifar_dir="/home/ubuntu/destin/pickled_cifar/"
 data=load_train()
 # Declare a Network Object and load Training Data
 
@@ -75,10 +74,10 @@ for epoch in range(5):
                 DESTIN.layers[0][L].do_layer_learning()
                 #DESTIN.layers[0][L].shared_learning()
     print "Epoch " + str(epoch+1) + " completed"
-pickle.dump( DESTIN, open( "DESTIN_conv", "wb" ) )
-print "done"
+# pickle.dump( DESTIN, open( "DESTIN_conv", "wb" ) )
+print "done with destin training network"
 
-DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
+# DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
 
 
 
