@@ -41,7 +41,7 @@ alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
 
 #Load Data, 10 loads 5 batches in total 50,000
 # 1 to 5 load batch_1 to batch_5training images, 1 to five
-cifar_dir="/home/ubuntu/pickled_cifar/"
+cifar_dir="/home/ubuntu/destin/pickled_cifar/"
 data=load_train()
 # Declare a Network Object and load Training Data
 
@@ -143,7 +143,7 @@ del data
 print "Training With SVM"
 print("Loading training and test labels")
 
-trainData, trainLabel, testData, testLabel=ds.load_CIFAR10("/home/tejas/Desktop/cifar-10-batches-py")
+trainData, trainLabel, testData, testLabel=ds.load_CIFAR10("/home/ubuntu/destin/cifar-10-batches-py")
 del trainData
 del testData
 

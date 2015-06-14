@@ -12,7 +12,7 @@ t_0=time.time()
 n_epochs=100
 batch_size=100
 
-Xtr, Ytr, Xte, Yte=ds.load_CIFAR10("/home/tejas/Desktop/cifar-10-batches-py")
+Xtr, Ytr, Xte, Yte=ds.load_CIFAR10("/home/ubuntu/destin/cifar-10-batches-py")
 
 Xtr=np.mean(Xtr, 3)
 Xte=np.mean(Xte, 3)
@@ -70,7 +70,7 @@ for batch in xrange(0,n_train_batches):
 			features=np.vstack((features, temp))
 	print "Batch ", batch+1, "\t\t\t\t features size: ", features.shape
 	if (batch+1)%25 == 0:
-		pickle.dump(features, open("/home/tejas/Documents/pickled_cifar/train-"+start+"-"+str(batch+1)+".p", "wb"))
+		pickle.dump(features, open("/home/ubuntu/destin/pickled_cifar/train-"+start+"-"+str(batch+1)+".p", "wb"))
 		print "----------- Pickled ", str(batch+1), " -----------"
 		start=str(batch+1)
 		features=np.asarray([])
@@ -90,7 +90,7 @@ for batch in xrange(0,n_test_batches):
 			features=np.vstack((features, temp))
 	print "Batch ", batch+1, "\t\t\t\t features size: ", features.shape
 	if (batch+1)%25 == 0:
-		pickle.dump(features, open("/home/tejas/Documents/pickled_cifar/test-"+start+"-"+str(batch+1)+".p", "wb"))
+		pickle.dump(features, open("/home/ubuntu/destin/pickled_cifar/test-"+start+"-"+str(batch+1)+".p", "wb"))
 		print "----------- Pickled ", str(batch+1), " -----------"
 		start=str(batch+1)
 		features=np.asarray([])  
@@ -104,10 +104,10 @@ print "\n\nTotal time taken for testing data : ", (time.time()-t_0)/60, " minute
 ## combining the individual pickle files
 #####################################################
 
-train_names=np.arange(25,476,25)
-test_names=np.arange(25,76,25)
+train_names=np.arange(0,476,25)
+test_names=np.arange(0,76,25)
 
-cifar_dir="/home/ubuntu/pickled_cifar/"
+cifar_dir="/home/ubuntu/destin/pickled_cifar/"
 
 data_train=np.asarray([])
 for num in train_names:
