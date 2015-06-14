@@ -17,7 +17,7 @@ class Node:
     def __init__(self, 
                  layer_number, 
                  node_pos, 
-                 cifar_stat=None):
+                 cifar_stat=[]):
         """
         Initialize each node 
 
@@ -30,7 +30,7 @@ class Node:
         self.belief = []
         # cifarStat = load_cifar(4)#  to be used for Normalization and Whitening
         #  Purposes
-        if cifar_stat is not None:
+        if len(cifar_stat):
             self.patch_mean = cifar_stat['patch_mean']
             self.patch_std = cifar_stat['patch_std']
             self.v = cifar_stat['whiten_mat']

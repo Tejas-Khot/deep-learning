@@ -15,7 +15,7 @@ class Layer:
     def __init__(self, 
                  layer_num, 
                  number_of_nodes, 
-                 cifar_stat=None, 
+                 cifar_stat=[], 
                  patch_mode='Adjacent', 
                  image_type='Color'):
         """

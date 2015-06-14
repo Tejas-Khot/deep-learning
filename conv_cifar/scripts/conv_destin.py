@@ -19,6 +19,7 @@ num_layers = 4
 patch_mode = 'Adjacent'
 image_type = 'Color'
 network_mode = True
+cifar_stat=[]
 # For a Node: specify Your Algorithm Choice and Corresponding parameters
 
 # ******************************************************************************************
@@ -44,7 +45,7 @@ alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
 data=load_train()
 # Declare a Network Object and load Training Data
 
-DESTIN = Network( num_layers, algorithm_choice, alg_params, num_nodes_per_layer , patch_mode, image_type,)
+DESTIN = Network( num_layers, algorithm_choice, alg_params, num_nodes_per_layer, cifar_stat , patch_mode, image_type,)
 #, , , , cifar_stat, patch_mode='Adjacent', image_type='Color'
 DESTIN.setmode(network_mode)
 DESTIN.set_lowest_layer(0)

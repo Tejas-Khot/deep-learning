@@ -24,7 +24,7 @@ class Network():
                  alg_choice, 
                  alg_params, 
                  num_nodes_per_layer, 
-                 cifar_stat=None, 
+                 cifar_stat=[], 
                  patch_mode='Adjacent', 
                  image_type='Color'):
 
