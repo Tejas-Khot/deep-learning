@@ -55,7 +55,7 @@ class ConvLayer(object):
                                 "sigmoid" for Sigmoid function
                                 "softplus" for Softplus function
                                 "linear" for linear function (string)
-        @param stride: 	the number of shifts over rows/cols to get the the next pool region.
+        @param stride:  the number of shifts over rows/cols to get the the next pool region.
                         if st is None, it is considered equal to ds (no overlap on pooling regions) (tuple of size 2)
                         The step (or stride) with which to slide the filters over the image. Defaults to (1, 1).
         @param border_mode: convolution mode
@@ -132,17 +132,17 @@ class ConvLayer(object):
         @return output : A 4D tensor of filtered images (feature maps) with dimensions
                          representing batch size, number of filters, feature map height,
                          and feature map width.
-			
+            
                         The height and width of the feature map depend on the border
                         mode. For 'valid' it is ``image_size - filter_size + 1`` while
                         for 'full' it is ``image_size + filter_size - 1``
-    	"""
+        """
         self.conv_output=conv.conv2d(input=input,
                                     filters=self.W, 
                                     image_shape=self.image_shape,
                                     filter_shape=self.filter_shape,
                                     border_mode=self.border_mode,
-                                    subsample=self.stride)	    	
+                                    subsample=self.stride)          
         # need to check this...condition not working
         #if self.tied_biases:
         #    self.conv_output+=self.b.dimshuffle("x", 0, "x", "x")
@@ -170,7 +170,9 @@ class ConvLayer(object):
         self.feature_maps=self.activation(pre_activation)
         return self.feature_maps
 
-    def get_output(self):
+    def get_output(self, X):
+        if X is not None:
+            self.apply_conv(X)
         if self.feature_maps is None:
             self.apply_activation(self.conv_output)   #dont know if there should be return here
         return self.feature_maps
@@ -210,7 +212,7 @@ class ConvLayerFilterActs(ConvLayer):
                                 "sigmoid" for Sigmoid function
                                 "softplus" for Softplus function
                                 "linear" for linear function (string)
-        @param stride: 	the number of shifts over rows/cols to get the the next pool region. 
+        @param stride:  the number of shifts over rows/cols to get the the next pool region. 
                         if st is None, it is considered equal to ds (no overlap on pooling regions) (tuple of size 2) 
                         The step (or stride) with which to slide the filters over the image. Defaults to (1, 1).
         @param border_mode: convolution mode
@@ -238,7 +240,7 @@ class ConvLayerFilterActs(ConvLayer):
         @return output : A 4D tensor of filtered images (feature maps) with dimensions
                          representing batch size, number of filters, feature map height,
                          and feature map width.
-			
+            
                         The height and width of the feature map depend on the border
                         mode. For 'valid' it is ``image_size - filter_size + 1`` while
                         for 'full' it is ``image_size + filter_size - 1``
