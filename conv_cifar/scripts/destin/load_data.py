@@ -4,19 +4,49 @@ import cPickle
 from random import randrange
 import numpy as np
 #cifar_dir = '/home/habtegebrial/Desktop/python-destin/cifar-10-batches-py/'
-cifar_dir = '/home/tejas/Desktop/cifar-10-batches-py/'
 # cifar_dir = '/home/eskender/Destin/cifar-10-batches-py/'
 #  Contains loading cifar batches and
 #  feeding input to lower layer nodes
 
+#####################################################
+## combining the individual pickle files
+#####################################################
+
+
+cifar_dir="/home/ubuntu/destin/pickled_cifar/"
+
+
+
 def load_train():
-    train_data=cPickle.load(open(cifar_dir+"data_train.p", "rb"))
-    return train_data
+    train_names=np.arange(0,476,25)
+    data_train=np.asarray([])
+    for num in train_names:
+        temp=pickle.load(open(cifar_dir+"train-"+str(num)+"-"+str(num+25)+".p", "rb"))
+        if not data_train.size:
+            data_train=temp
+        else:
+            data_train=np.vstack((data_train, temp))
+        # print "Training data Stacked till : ", str(num+25)
+
+    pickle.dump(data_train, open(cifar_dir+"data_train.p","wb"))
+    print "Training data completed. Shape is: ", data_train.shape   # (50000, 33800)
+    return data_train
 
 def load_test():
-    test_data=cPickle.load(open(cifar_dir+"data_test.p", "rb"))
-    return test_data
-    
+    test_names=np.arange(0,76,25)
+    data_test=np.asarray([])
+    for num in test_names:
+        temp=pickle.load(open(cifar_dir+"test-"+str(num)+"-"+str(num+25)+".p", "rb"))
+        if not data_test.size:
+            data_test=temp
+        else:
+            data_test=np.vstack((data_test, temp))
+        # print "Testin Data Stacked till : ", str(num+25)
+
+    pickle.dump(data_test, open(cifar_dir+"data_test.p","wb"))
+    print "Testing data completed. Shape is: ", data_test.shape # (10000, 33800)
+    return data_test
+
 def read_cifar_file(fn):
     fo = open(fn, 'rb')
     dict = cPickle.load(fo)
