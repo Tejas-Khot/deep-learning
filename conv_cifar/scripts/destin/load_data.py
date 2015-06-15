@@ -15,11 +15,11 @@ import numpy as np
 
 cifar_dir="/home/ubuntu/destin/pickled_cifar/"
 
-def load_train(int num):
+def load_train(num):
     data_train=pickle.load(open(cifar_dir+"train-"+str(num)+"-"+str(num+25)+".p", "rb"))
     return data_train
 
-def load_test(int num):
+def load_test(num):
     data_test=pickle.load(open(cifar_dir+"test-"+str(num)+"-"+str(num+25)+".p", "rb"))
     return data_test
 
