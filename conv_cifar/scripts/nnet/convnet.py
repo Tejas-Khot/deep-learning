@@ -23,7 +23,7 @@ class ConvNetBase(object):
                  fm_size=None,
                  batch_size=None,
                  step=(1,1),
-                 border_mode="valid",
+                 border_mode="full",
                  use_bias=True,
                  **kwargs):
         """Initialize ConvNet structure

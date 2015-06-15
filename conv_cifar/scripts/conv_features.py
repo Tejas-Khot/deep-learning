@@ -61,7 +61,7 @@ features=np.asarray([])
 start=str(0)    
 
 for batch in xrange(0,n_train_batches):
-	batch_img=extract_train(batch)	# (100, 50, 26, 26)
+	batch_img=extract_train(batch)	# (100, 50, 38, 38)
 	for i in xrange(0, batch_size):
 		temp=batch_img[i].flatten()
 		if not features.size:
@@ -81,7 +81,7 @@ features=np.asarray([])
 start=str(0)    
 
 for batch in xrange(0,n_test_batches):
-	batch_img=extract_test(batch)	# (100, 50, 26, 26)
+	batch_img=extract_test(batch)	# (100, 50, 38, 38)
 	for i in xrange(0, batch_size):
 		temp=batch_img[i].flatten()
 		if not features.size:
@@ -100,6 +100,7 @@ del features
 print "\n\nTotal time taken for testing data : ", (time.time()-t_0)/60, " minutes"
 
 
+"""
 #####################################################
 ## combining the individual pickle files
 #####################################################
@@ -134,3 +135,4 @@ for num in test_names:
 pickle.dump(data_test, open(cifar_dir+"data_test.p","wb"))
 print "Testing data completed. Shape is: ", data_test.shape	# (50000, 33800)
 del data_test
+"""
