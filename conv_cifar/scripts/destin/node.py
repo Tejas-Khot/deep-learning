@@ -30,7 +30,8 @@ class Node:
         self.belief = []
         # cifarStat = load_cifar(4)#  to be used for Normalization and Whitening
         #  Purposes
-        if len(cifar_stat):
+        self.cifar_stat=cifar_stat
+        if len(self.cifar_stat):
             self.patch_mean = cifar_stat['patch_mean']
             self.patch_std = cifar_stat['patch_std']
             self.v = cifar_stat['whiten_mat']
@@ -68,7 +69,7 @@ class Node:
 
         @param In: input data 
         """
-        if self.layer_number == 0 and len(cifar_stat):
+        if self.layer_number == 0 and len(self.cifar_stat):
             In = In - self.patch_mean
             In = In / self.patch_std
             In = In.dot(self.v)

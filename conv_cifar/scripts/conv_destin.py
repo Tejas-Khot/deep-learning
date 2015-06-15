@@ -75,7 +75,11 @@ for epoch in range(5):
                 DESTIN.layers[0][L].do_layer_learning()
                 #DESTIN.layers[0][L].shared_learning()
     print "Epoch " + str(epoch+1) + " completed"
-# pickle.dump( DESTIN, open( "DESTIN_conv", "wb" ) )
+try:
+    pickle.dump( DESTIN, open( "DESTIN_conv", "wb" ) )
+    print "Pickled DeSTIN "
+except:
+    print "Could not pickle DeSTIN"    
 print "done with destin training network"
 
 # DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
