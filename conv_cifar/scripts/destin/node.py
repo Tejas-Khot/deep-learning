@@ -68,7 +68,7 @@ class Node:
 
         @param In: input data 
         """
-        if self.layer_number == 0 and cifar_stat is not None:
+        if self.layer_number == 0 and len(cifar_stat):
             In = In - self.patch_mean
             In = In / self.patch_std
             In = In.dot(self.v)
