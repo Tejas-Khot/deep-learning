@@ -12,6 +12,7 @@ from sklearn import svm
 import nnet.datasets as ds
 import os
 
+t_0 = time()
 # *****Define Parameters for the Network and nodes
 
 # Network Params
@@ -235,7 +236,7 @@ io.savemat('accuracy.mat', eff)
 
 
 
-
+print "Total time taken: ", time()-t_0
 
 
 
