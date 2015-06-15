@@ -74,7 +74,7 @@ class Node:
             In = In / self.patch_std
             In = In.dot(self.v)
         self.input = In
-        print self.input.shape
+        #print self.input.shape
 
     def do_node_learning(self, mode):
         """

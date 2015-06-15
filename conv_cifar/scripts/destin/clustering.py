@@ -46,7 +46,7 @@ class Clustering:
         """
         Update the node based on an input and training flag.
         """
-        print self.DIMS, input_.shape
+        # print self.DIMS, input_.shape
         input_ = input_.reshape(1, self.DIMS)
         self.process_input(input_, TRAIN)
 
