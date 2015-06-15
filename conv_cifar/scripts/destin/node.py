@@ -48,7 +48,7 @@ class Node:
             cents_per_layer = alg_params['num_cents_per_layer']
             #  input_width = input_widths[layer_num]
             if self.layer_number == 0:
-                input_width = 48
+                input_width = 800   # 4*4*50 i.e. Ratio * num_channels
             else:
                 input_width = cents_per_layer[self.layer_number - 1] * 4
             self.learning_algorithm = Clustering(mr=alg_params['mr'], 
@@ -74,6 +74,7 @@ class Node:
             In = In / self.patch_std
             In = In.dot(self.v)
         self.input = In
+        print self.input.shape
 
     def do_node_learning(self, mode):
         """
