@@ -27,8 +27,11 @@ def load_train():
         else:
             data_train=np.vstack((data_train, temp))
         print "Training data Stacked till batch: ", str(num+25)
-
-    # pickle.dump(data_train, open(cifar_dir+"data_train.p","wb"))
+    try:
+        pickle.dump(data_train, open(cifar_dir+"data_train.p","wb"))
+        print "Pickled train data"
+    except:
+        print " Could not pickle train data"
     print "Training data completed. Shape is: ", data_train.shape   # (50000, 33800)
     return data_train
 
@@ -42,8 +45,11 @@ def load_test():
         else:
             data_test=np.vstack((data_test, temp))
         print "Testin Data Stacked till batch: ", str(num+25)
-
-    # pickle.dump(data_test, open(cifar_dir+"data_test.p","wb"))
+    try:
+        pickle.dump(data_test, open(cifar_dir+"data_test.p","wb"))
+        print "Pickled test data"
+    except:
+        print "Could not pickle test data"
     print "Testing data completed. Shape is: ", data_test.shape # (10000, 33800)
     return data_test
 
