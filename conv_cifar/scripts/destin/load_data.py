@@ -15,9 +15,33 @@ import numpy as np
 
 cifar_dir="/home/ubuntu/destin/pickled_cifar/"
 
+def load_train(int num):
+    data_train=pickle.load(open(cifar_dir+"train-"+str(num)+"-"+str(num+25)+".p", "rb"))
+    return data_train
 
+def load_test(int num):
+    data_test=pickle.load(open(cifar_dir+"test-"+str(num)+"-"+str(num+25)+".p", "rb"))
+    return data_test
 
-def load_train():
+def load_test_full():
+    test_names=np.arange(0,76,25)
+    data_test=np.asarray([])
+    for num in test_names:
+        temp=pickle.load(open(cifar_dir+"test-"+str(num)+"-"+str(num+25)+".p", "rb"))
+        if not data_test.size:
+            data_test=temp
+        else:
+            data_test=np.vstack((data_test, temp))
+        print "Testin Data Stacked till batch: ", str(num+25)
+    try:
+        pickle.dump(data_test, open(cifar_dir+"data_test.p","wb"))
+        print "Pickled test data"
+    except:
+        print "Could not pickle test data"
+    print "Testing data completed. Shape is: ", data_test.shape # (10000, 33800)
+    return data_test
+
+def load_train_full():
     train_names=np.arange(0,476,25)
     data_train=np.asarray([])
     for num in train_names:
