@@ -64,10 +64,11 @@ for epoch in range(5):
             print("Training Iteration Number %d" % I)
         for L in range(DESTIN.number_of_layers):
             if L == 0:
-                img=data[I][:].reshape(50, 26, 26)
-                img=img.swapaxes(0,1).swapaxes(1,2) ## (26, 26, 50)
+                img=data[I][:].reshape(50, 38, 38)
+                img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
+                img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
                 # This is equivalent to sharing centroids or kernels
-                DESTIN.layers[0][L].load_input(img, [2, 2])
+                DESTIN.layers[0][L].load_input(img, [4, 4])
                 DESTIN.layers[0][L].do_layer_learning()
                 #DESTIN.layers[0][L].shared_learning()
             else:
@@ -101,9 +102,10 @@ for I in range(data.shape[0]):  # For Every image in the data set
         print("Testing Iteration Number %d" % I)
     for L in range(DESTIN.number_of_layers):
         if L == 0:
-            img=data[I][:].reshape(50, 26, 26)
-            img=img.swapaxes(0,1).swapaxes(1,2) ## (26, 26, 50)
-            DESTIN.layers[0][L].load_input(img, [2, 2])
+            img=data[I][:].reshape(50, 38, 38)
+            img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
+            img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
+            DESTIN.layers[0][L].load_input(img, [4, 4])
             DESTIN.layers[0][L].do_layer_learning()
         else:
             DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
@@ -128,9 +130,10 @@ for I in range(data.shape[0]):  # For Every image in the data set
         print("Testing Iteration Number %d" % (I+50000))
     for L in range(DESTIN.number_of_layers):
         if L == 0:
-            img=data[I][:].reshape(50, 26, 26)
-            img=img.swapaxes(0,1).swapaxes(1,2) ## (26, 26, 50)
-            DESTIN.layers[0][L].load_input(img, [2, 2])
+            img=data[I][:].reshape(50, 38, 38)
+            img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
+            img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
+            DESTIN.layers[0][L].load_input(img, [4, 4])
             DESTIN.layers[0][L].do_layer_learning()  # Calculates belief for
         else:
             DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
