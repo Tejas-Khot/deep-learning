@@ -6,7 +6,7 @@ __author__ = 'teddy'
 import scipy.io as io
 from load_data import *
 from layer import *
-
+import theano.tensor as T
 # io.savemat(file_name,Dict,True)
 # TODO: get ridoff the sequential requirements like first feed the layer
 # an input the you can initialize it

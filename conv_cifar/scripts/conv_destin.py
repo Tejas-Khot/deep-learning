@@ -45,53 +45,53 @@ alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
 # 1 to 5 load batch_1 to batch_5training images, 1 to five
 # Declare a Network Object and load Training Data
 
-DESTIN = Network( num_layers, algorithm_choice, alg_params, num_nodes_per_layer, cifar_stat , patch_mode, image_type,)
+# DESTIN = Network( num_layers, algorithm_choice, alg_params, num_nodes_per_layer, cifar_stat , patch_mode, image_type,)
 #, , , , cifar_stat, patch_mode='Adjacent', image_type='Color'
-DESTIN.setmode(network_mode)
-DESTIN.set_lowest_layer(0)
+# DESTIN.setmode(network_mode)
+# DESTIN.set_lowest_layer(0)
 # Load Data
 # Modify the location of the training data in file "load_data.py"
 
 # data = np.random.rand(5,32*32*3)
 # Initialize Network; there is is also a layer-wise initialization option
-DESTIN.init_network()
+# DESTIN.init_network()
 
 train_names=np.arange(0,476,25)
 
 #Train the Network
 print "DeSTIN Training/with out Feature extraction"
-for epoch in range(5):
-    counter=0
-    for num in train_names:
-        data=load_train(num)
-        for I in range(data.shape[0]):  # For Every image in the data set batch
-            counter+=1
-            if counter % 10000 == 0:
-                print("Training Iteration Image Number : %d" % counter)
-            for L in range(DESTIN.number_of_layers):
-                if L == 0:
-                    img=data[I][:].reshape(50, 38, 38)
-                    img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
-                    img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
-                    # This is equivalent to sharing centroids or kernels
-                    DESTIN.layers[0][L].load_input(img, [4, 4])
-                    DESTIN.layers[0][L].do_layer_learning()
-                    #DESTIN.layers[0][L].shared_learning()
-                else:
-                    DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
-                    DESTIN.layers[0][L].do_layer_learning()
-                    #DESTIN.layers[0][L].shared_learning()
-    print "Epoch " + str(epoch+1) + " completed"
-try:
-    pickle.dump( DESTIN, open( "DESTIN_conv", "wb" ) )
-    print "Pickled DeSTIN "
-except:
-    print "Could not pickle DeSTIN"    
-print "done with destin training network"
+# for epoch in range(5):
+#     counter=0
+#     for num in train_names:
+#         data=load_train(num)
+#         for I in range(data.shape[0]):  # For Every image in the data set batch
+#             counter+=1
+#             if counter % 10000 == 0:
+#                 print("Training Iteration Image Number : %d" % counter)
+#             for L in range(DESTIN.number_of_layers):
+#                 if L == 0:
+#                     img=data[I][:].reshape(50, 38, 38)
+#                     img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
+#                     img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
+#                     # This is equivalent to sharing centroids or kernels
+#                     DESTIN.layers[0][L].load_input(img, [4, 4])
+#                     DESTIN.layers[0][L].do_layer_learning()
+#                     #DESTIN.layers[0][L].shared_learning()
+#                 else:
+#                     DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
+#                     DESTIN.layers[0][L].do_layer_learning()
+#                     #DESTIN.layers[0][L].shared_learning()
+#     print "Epoch " + str(epoch+1) + " completed"
+# try:
+#     pickle.dump( DESTIN, open( "DESTIN_conv", "wb" ) )
+#     print "Pickled DeSTIN "
+# except:
+#     print "Could not pickle DeSTIN"    
+# print "done with destin training network"
 
-del data
-# DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
-
+# del data
+print("Loading pickled DeSTIN")
+DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
 
 print("DeSTIN running | Feature Extraction over the Training Data")
 network_mode = False
