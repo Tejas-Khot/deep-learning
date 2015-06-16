@@ -59,24 +59,6 @@ def load_train_full():
     print "Training data completed. Shape is: ", data_train.shape   # (50000, 33800)
     return data_train
 
-def load_test():
-    test_names=np.arange(0,76,25)
-    data_test=np.asarray([])
-    for num in test_names:
-        temp=pickle.load(open(cifar_dir+"test-"+str(num)+"-"+str(num+25)+".p", "rb"))
-        if not data_test.size:
-            data_test=temp
-        else:
-            data_test=np.vstack((data_test, temp))
-        print "Testin Data Stacked till batch: ", str(num+25)
-    try:
-        pickle.dump(data_test, open(cifar_dir+"data_test.p","wb"))
-        print "Pickled test data"
-    except:
-        print "Could not pickle test data"
-    print "Testing data completed. Shape is: ", data_test.shape # (10000, 33800)
-    return data_test
-
 def read_cifar_file(fn):
     fo = open(fn, 'rb')
     dict = cPickle.load(fo)
