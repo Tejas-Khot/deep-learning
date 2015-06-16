@@ -4,13 +4,15 @@
 """
 __author__='tejas'
 
-from destin.network import *
-from destin.load_data import *
-import cPickle as pickle
-from time import time
-from sklearn import svm
-import nnet.datasets as ds
 import os
+from time import time
+
+import cPickle as pickle
+from destin.load_data import *
+from destin.network import *
+import nnet.datasets as ds
+from sklearn import svm
+
 
 t_0 = time()
 # *****Define Parameters for the Network and nodes
@@ -80,6 +82,12 @@ for epoch in range(5):
                     DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
                     DESTIN.layers[0][L].do_layer_learning()
                     #DESTIN.layers[0][L].shared_learning()
+            if counter>0 and counter % 10000==0:
+                try:
+                    pickle.dump( DESTIN, open( "DESTIN_conv"+str(counter), "wb" ) )
+                    print "Pickled DeSTIN till ", counter
+                except:
+                    print "Could not pickle DeSTIN"    
             counter+=1
     print "Epoch " + str(epoch+1) + " completed"
 try:
@@ -139,7 +147,7 @@ for num in test_names:
     data=load_test(num)
     for I in range(data.shape[0]):  # For Every image in the data set
         if counter % 1000 == 0:
-            print("Testing Iteration Number : Completed till Image: %d" % (counter)
+            print("Testing Iteration Number : Completed till Image: %d" % (counter))
         for L in range(DESTIN.number_of_layers):
             if L == 0:
                 img=data[I][:].reshape(50, 38, 38)
