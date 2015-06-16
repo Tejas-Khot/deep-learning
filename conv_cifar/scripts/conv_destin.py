@@ -65,7 +65,11 @@ train_names=np.arange(0,476,25)
 print "DeSTIN Training/with out Feature extraction"
 for epoch in range(5):
     counter=0
-    for num in train_names[16:]:
+    if epoch==0:
+        k=16
+    else:
+        k=0
+    for num in train_names[k:]:
         data=load_train(num)
         for I in range(data.shape[0]):  # For Every image in the data set batch
             if counter % 1000 == 0:
@@ -85,7 +89,7 @@ for epoch in range(5):
                     #DESTIN.layers[0][L].shared_learning()
             if counter>0 and counter % 10000==0:
                 try:
-                    pickle.dump( DESTIN, open( "DESTIN_conv"+str(counter), "wb" ) )
+                    pickle.dump( DESTIN, open( "DESTIN_conv_"+ str(epoch)+"_"+str(counter), "wb" ) )
                     print "Pickled DeSTIN till ", counter
                 except:
                     print "Could not pickle DeSTIN"    
