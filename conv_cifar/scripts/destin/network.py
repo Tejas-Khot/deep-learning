@@ -6,7 +6,11 @@ __author__ = 'teddy'
 import scipy.io as io
 from load_data import *
 from layer import *
+import theano
+from theano.tensor.signal import downsample
 import theano.tensor as T
+import numpy as np
+import math
 # io.savemat(file_name,Dict,True)
 # TODO: get ridoff the sequential requirements like first feed the layer
 # an input the you can initialize it
