@@ -46,52 +46,51 @@ alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
 # Declare a Network Object and load Training Data
 
 DESTIN = Network( num_layers, algorithm_choice, alg_params, num_nodes_per_layer, cifar_stat , patch_mode, image_type,)
-# , , , , cifar_stat, patch_mode='Adjacent', image_type='Color'
+#, , , , cifar_stat, patch_mode='Adjacent', image_type='Color'
 DESTIN.setmode(network_mode)
 DESTIN.set_lowest_layer(0)
 # Load Data
 # Modify the location of the training data in file "load_data.py"
 
-data = np.random.rand(5,32*32*3)
+# data = np.random.rand(5,32*32*3)
 # Initialize Network; there is is also a layer-wise initialization option
 DESTIN.init_network()
 
 train_names=np.arange(0,476,25)
 
 #Train the Network
-# print "DeSTIN Training/with out Feature extraction"
-# for epoch in range(5):
-#     counter=0
-#     for num in train_names:
-#         data=load_train(num)
-#         for I in range(data.shape[0]):  # For Every image in the data set batch
-#             counter+=1
-#             if counter % 10000 == 0:
-#                 print("Training Iteration Image Number : %d" % counter)
-#             for L in range(DESTIN.number_of_layers):
-#                 if L == 0:
-#                     img=data[I][:].reshape(50, 38, 38)
-#                     img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
-#                     img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
-#                     # This is equivalent to sharing centroids or kernels
-#                     DESTIN.layers[0][L].load_input(img, [4, 4])
-#                     DESTIN.layers[0][L].do_layer_learning()
-#                     #DESTIN.layers[0][L].shared_learning()
-#                 else:
-#                     DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
-#                     DESTIN.layers[0][L].do_layer_learning()
-#                     #DESTIN.layers[0][L].shared_learning()
-#     print "Epoch " + str(epoch+1) + " completed"
-# try:
-#     pickle.dump( DESTIN, open( "DESTIN_conv", "wb" ) )
-#     print "Pickled DeSTIN "
-# except:
-#     print "Could not pickle DeSTIN"    
-# print "done with destin training network"
+print "DeSTIN Training/with out Feature extraction"
+for epoch in range(5):
+    counter=0
+    for num in train_names:
+        data=load_train(num)
+        for I in range(data.shape[0]):  # For Every image in the data set batch
+            if counter % 1000 == 0:
+                print("Training Iteration Image Number : %d" % counter)
+            for L in range(DESTIN.number_of_layers):
+                if L == 0:
+                    img=data[I][:].reshape(50, 38, 38)
+                    img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
+                    img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
+                    # This is equivalent to sharing centroids or kernels
+                    DESTIN.layers[0][L].load_input(img, [4, 4])
+                    DESTIN.layers[0][L].do_layer_learning()
+                    #DESTIN.layers[0][L].shared_learning()
+                else:
+                    DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
+                    DESTIN.layers[0][L].do_layer_learning()
+                    #DESTIN.layers[0][L].shared_learning()
+            counter+=1
+    print "Epoch " + str(epoch+1) + " completed"
+try:
+    pickle.dump( DESTIN, open( "DESTIN_conv", "wb" ) )
+    print "Pickled DeSTIN "
+except:
+    print "Could not pickle DeSTIN"    
+print "done with destin training network"
 
-# del data
-print("Loading pickled DeSTIN")
-DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
+# DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
+
 
 print("DeSTIN running | Feature Extraction over the Training Data")
 network_mode = False
@@ -104,11 +103,8 @@ if not os.path.exists('train'):
 
 counter=0
 for num in train_names:
-        data=load_train(num)
-    # for I in range(data.shape[0]):  # For Every image in the data set
-        I=data.shape[0]-1
-        counter+=1
-        print I
+    data=load_train(num)
+    for I in range(data.shape[0]):  # For Every image in the data set
         if counter % 1000 == 0:
             print("Testing Iteration Number : Completed till Image: %d" % counter)
         for L in range(DESTIN.number_of_layers):
@@ -122,49 +118,48 @@ for num in train_names:
                 DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
                 DESTIN.layers[0][L].do_layer_learning()
         DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad')             #( maxpool_shape , ignore_border, mode)
-        # if counter in range(199, 50999, 200):
-        if counter==1:
-            Name = 'train/' + str(50000) + '.txt'
+        if counter in range(199, 50999, 200):
+            Name = 'train/' + str(counter) + '.txt'
             #file_id = open(Name, 'w')
             np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
             #file_id.close()
             # Get rid-off accumulated training beliefs
             DESTIN.clean_belief_exporter()
-
+        counter+=1
 
 print("Feature Extraction with the test set")
 
-# if not os.path.exists('test'):
-#     os.makedirs('test')    
+if not os.path.exists('test'):
+    os.makedirs('test')    
 
-# test_names=np.arange(0,76,25)
-# counter=0
+test_names=np.arange(0,76,25)
+counter=0
 
-# for num in test_names:
-#     data=load_test(num)
-#     for I in range(data.shape[0]):  # For Every image in the data set
-#         counter+=1
-#         if counter % 1000 == 0:
-#             print("Testing Iteration Number : Completed till Image: %d" % (counter+50000))
-#         for L in range(DESTIN.number_of_layers):
-#             if L == 0:
-#                 img=data[I][:].reshape(50, 38, 38)
-#                 img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
-#                 img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
-#                 DESTIN.layers[0][L].load_input(img, [4, 4])
-#                 DESTIN.layers[0][L].do_layer_learning()  # Calculates belief for
-#             else:
-#                 DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
-#                 DESTIN.layers[0][L].do_layer_learning()
-#         DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad') 
-#         if counter in range(199, 10199, 200):
-#             Name = 'test/' + str(counter) + '.txt'
-#             np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
-#             # Get rid-off accumulated training beliefs
-#             DESTIN.clean_belief_exporter()
+for num in test_names:
+    data=load_test(num)
+    for I in range(data.shape[0]):  # For Every image in the data set
+        if counter % 1000 == 0:
+            print("Testing Iteration Number : Completed till Image: %d" % (counter)
+        for L in range(DESTIN.number_of_layers):
+            if L == 0:
+                img=data[I][:].reshape(50, 38, 38)
+                img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
+                img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
+                DESTIN.layers[0][L].load_input(img, [4, 4])
+                DESTIN.layers[0][L].do_layer_learning()  # Calculates belief for
+            else:
+                DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
+                DESTIN.layers[0][L].do_layer_learning()
+        DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad') 
+        if I in range(199, 10199, 200):
+            Name = 'test/' + str(I + 1) + '.txt'
+            np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
+            # Get rid-off accumulated training beliefs
+            DESTIN.clean_belief_exporter()
+        counter+=1
 
-# del data
-"""
+del data
+
 print "Training With SVM"
 print("Loading training and test labels")
 
@@ -179,12 +174,12 @@ del testData
 print("Loading training and testing features")
 
 I = 199
-Name = 'train/' + str(I) + '.txt'
+Name = 'train/' + str(I + 1) + '.txt'
 trainData = np.ravel(np.loadtxt(Name))
 
 
 for I in range(399, 50000, 200):
-    Name = 'train/' + str(I) + '.txt'
+    Name = 'train/' + str(I + 1) + '.txt'
     file_id = open(Name, 'r')
     Temp = np.ravel(np.loadtxt(Name))
     trainData = np.hstack((trainData, Temp))
@@ -196,7 +191,7 @@ del Temp
 Len = np.shape(trainData)[0]
 Size = np.size(trainData)
 
-print "train data shape: ", trainData.shape
+print "Training data shape is : ", trainData.shape
 Width = Len/50000
 print Len
 print Width*50000
@@ -220,11 +215,11 @@ testData = np.array([])
 print("Loading training and testing features")
 
 I = 399
-Name = 'test/' + str(I) + '.txt'
+Name = 'test/' + str(I + 1) + '.txt'
 testData = np.ravel(np.loadtxt(Name))
 
 for I in range(599, 10000, 200):
-    Name = 'test/' + str(I) + '.txt'
+    Name = 'test/' + str(I + 1) + '.txt'
     file_id = open(Name, 'r')
     Temp = np.ravel(np.loadtxt(Name))
     testData = np.hstack((testData, Temp))
@@ -236,7 +231,7 @@ Size = np.size(testData)
 
 
 I = 399
-Name = 'test/' + str(I ) + '.txt'
+Name = 'test/' + str(I + 1) + '.txt'
 testData1 = np.ravel(np.loadtxt(Name))
 print np.shape(testData1)[0]/200.0
 
@@ -257,4 +252,4 @@ io.savemat('accuracy.mat', eff)
 print "Total time taken: ", time()-t_0
 
 
-"""
+
