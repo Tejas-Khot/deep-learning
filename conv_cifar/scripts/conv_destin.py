@@ -16,29 +16,29 @@ t_0 = time()
 # *****Define Parameters for the Network and nodes
 
 # Network Params
-num_layers = 4
-patch_mode = 'Adjacent'
-image_type = 'Color'
-network_mode = True
-cifar_stat=[]
+# num_layers = 4
+# patch_mode = 'Adjacent'
+# image_type = 'Color'
+# network_mode = True
+# cifar_stat=[]
 # For a Node: specify Your Algorithm Choice and Corresponding parameters
 
 # ******************************************************************************************
 #
 #                           Incremental Clustering
 #
-num_nodes_per_layer = [[8, 8], [4, 4], [2, 2], [1, 1]]
-num_cents_per_layer = [50, 25, 25 ,50]
-pool_size = [(16,1),(2,2),(2,2),(1,1)]        #pooling size: The first number is the number of vector 
-                                              #you want to pool. For example, (64,1) will pool all the 
-                                              #vector in the first layer. (16,1) will divide the first layer 
-                                              #in to 4 quarters and pool each of them. (4,1) will divide the 
-                                              #first layer in to 16th pieces and pool each of them
-print "Uniform DeSTIN with Clustering"
-algorithm_choice = 'Clustering'
-alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
-             'CENTS': [], 'node_id': [],
-             'num_cents_per_layer': num_cents_per_layer}
+# num_nodes_per_layer = [[8, 8], [4, 4], [2, 2], [1, 1]]
+# num_cents_per_layer = [50, 25, 25 ,50]
+# pool_size = [(16,1),(2,2),(2,2),(1,1)]        #pooling size: The first number is the number of vector 
+#                                               #you want to pool. For example, (64,1) will pool all the 
+#                                               #vector in the first layer. (16,1) will divide the first layer 
+#                                               #in to 4 quarters and pool each of them. (4,1) will divide the 
+#                                               #first layer in to 16th pieces and pool each of them
+# print "Uniform DeSTIN with Clustering"
+# algorithm_choice = 'Clustering'
+# alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
+#              'CENTS': [], 'node_id': [],
+#              'num_cents_per_layer': num_cents_per_layer}
 # ******************************************************************************************
 
 #Load Data, 10 loads 5 batches in total 50,000
@@ -56,7 +56,7 @@ alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
 # Initialize Network; there is is also a layer-wise initialization option
 # DESTIN.init_network()
 
-train_names=np.arange(0,476,25)
+# train_names=np.arange(0,476,25)
 
 #Train the Network
 # print "DeSTIN Training/with out Feature extraction"
@@ -91,11 +91,11 @@ train_names=np.arange(0,476,25)
 
 # del data
 # print("Loading pickled DeSTIN")
-DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
+# DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
 
-print("DeSTIN running | Feature Extraction over the Training Data")
-network_mode = False
-DESTIN.setmode(network_mode)
+# print("DeSTIN running | Feature Extraction over the Training Data")
+# network_mode = False
+# DESTIN.setmode(network_mode)
 
 # Testing it over the training set
 
@@ -129,13 +129,13 @@ DESTIN.setmode(network_mode)
 #             DESTIN.clean_belief_exporter()
 
 
-print("Feature Extraction with the test set")
+# print("Feature Extraction with the test set")
 
-if not os.path.exists('test'):
-    os.makedirs('test')    
+# if not os.path.exists('test'):
+#     os.makedirs('test')    
 
-test_names=np.arange(0,76,25)
-counter=0
+# test_names=np.arange(0,76,25)
+# counter=0
 
 # for num in test_names:
 #     data=load_test(num)
