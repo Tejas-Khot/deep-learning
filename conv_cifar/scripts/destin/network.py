@@ -117,7 +117,7 @@ class Network():
     def update_belief_exporter(self, maxpool_shape , ignore_border, mode):
         input = T.dmatrix('input')
         for i in range(self.lowest_layer, self.number_of_layers):
-            pool_out = downsample.max_pool_2d(input, maxpool_shape[i] , ignore_border=ignore_border, mode=mode)   
+            pool_out = downsample.max_pool_2d(input, maxpool_shape[i] , ignore_border=ignore_border)   
             f = theano.function([input],pool_out)    #function of pooling belief vector, maxpool_shape[i] = pool size
             temp_belief = np.array([])
             for j in range(len(self.layers[0][i].nodes)):
