@@ -137,30 +137,30 @@ if not os.path.exists('test'):
 test_names=np.arange(0,76,25)
 counter=0
 
-for num in test_names:
-    data=load_test(num)
-    for I in range(data.shape[0]):  # For Every image in the data set
-        counter+=1
-        if counter % 1000 == 0:
-            print("Testing Iteration Number : Completed till Image: %d" % (counter+50000))
-        for L in range(DESTIN.number_of_layers):
-            if L == 0:
-                img=data[I][:].reshape(50, 38, 38)
-                img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
-                img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
-                DESTIN.layers[0][L].load_input(img, [4, 4])
-                DESTIN.layers[0][L].do_layer_learning()  # Calculates belief for
-            else:
-                DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
-                DESTIN.layers[0][L].do_layer_learning()
-        DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad') 
-        if counter in range(199, 10199, 200):
-            Name = 'test/' + str(counter) + '.txt'
-            np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
-            # Get rid-off accumulated training beliefs
-            DESTIN.clean_belief_exporter()
+# for num in test_names:
+#     data=load_test(num)
+#     for I in range(data.shape[0]):  # For Every image in the data set
+#         counter+=1
+#         if counter % 1000 == 0:
+#             print("Testing Iteration Number : Completed till Image: %d" % (counter+50000))
+#         for L in range(DESTIN.number_of_layers):
+#             if L == 0:
+#                 img=data[I][:].reshape(50, 38, 38)
+#                 img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
+#                 img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
+#                 DESTIN.layers[0][L].load_input(img, [4, 4])
+#                 DESTIN.layers[0][L].do_layer_learning()  # Calculates belief for
+#             else:
+#                 DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
+#                 DESTIN.layers[0][L].do_layer_learning()
+#         DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad') 
+#         if counter in range(199, 10199, 200):
+#             Name = 'test/' + str(counter) + '.txt'
+#             np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
+#             # Get rid-off accumulated training beliefs
+#             DESTIN.clean_belief_exporter()
 
-del data
+# del data
 
 print "Training With SVM"
 print("Loading training and test labels")
@@ -176,12 +176,12 @@ del testData
 print("Loading training and testing features")
 
 I = 199
-Name = 'train/' + str(I + 1) + '.txt'
+Name = 'train/' + str(I) + '.txt'
 trainData = np.ravel(np.loadtxt(Name))
 
 
 for I in range(399, 50000, 200):
-    Name = 'train/' + str(I + 1) + '.txt'
+    Name = 'train/' + str(I) + '.txt'
     file_id = open(Name, 'r')
     Temp = np.ravel(np.loadtxt(Name))
     trainData = np.hstack((trainData, Temp))
@@ -216,11 +216,11 @@ testData = np.array([])
 print("Loading training and testing features")
 
 I = 399
-Name = 'test/' + str(I + 1) + '.txt'
+Name = 'test/' + str(I) + '.txt'
 testData = np.ravel(np.loadtxt(Name))
 
 for I in range(599, 10000, 200):
-    Name = 'test/' + str(I + 1) + '.txt'
+    Name = 'test/' + str(I) + '.txt'
     file_id = open(Name, 'r')
     Temp = np.ravel(np.loadtxt(Name))
     testData = np.hstack((testData, Temp))
@@ -232,7 +232,7 @@ Size = np.size(testData)
 
 
 I = 399
-Name = 'test/' + str(I + 1) + '.txt'
+Name = 'test/' + str(I ) + '.txt'
 testData1 = np.ravel(np.loadtxt(Name))
 print np.shape(testData1)[0]/200.0
 
