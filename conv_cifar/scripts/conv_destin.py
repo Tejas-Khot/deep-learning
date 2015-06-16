@@ -104,9 +104,9 @@ if not os.path.exists('train'):
 
 counter=0
 for num in train_names:
-    data=load_train(num)
+        data=load_train(num)
     # for I in range(data.shape[0]):  # For Every image in the data set
-    I=data.shape[0]-1
+        I=data.shape[0]-1
         counter+=1
         print I
         if counter % 1000 == 0:
