@@ -16,47 +16,47 @@ t_0 = time()
 # *****Define Parameters for the Network and nodes
 
 # Network Params
-# num_layers = 4
-# patch_mode = 'Adjacent'
-# image_type = 'Color'
-# network_mode = True
-# cifar_stat=[]
+num_layers = 4
+patch_mode = 'Adjacent'
+image_type = 'Color'
+network_mode = True
+cifar_stat=[]
 # For a Node: specify Your Algorithm Choice and Corresponding parameters
 
 # ******************************************************************************************
 #
 #                           Incremental Clustering
 #
-# num_nodes_per_layer = [[8, 8], [4, 4], [2, 2], [1, 1]]
-# num_cents_per_layer = [50, 25, 25 ,50]
-# pool_size = [(16,1),(2,2),(2,2),(1,1)]        #pooling size: The first number is the number of vector 
-#                                               #you want to pool. For example, (64,1) will pool all the 
-#                                               #vector in the first layer. (16,1) will divide the first layer 
-#                                               #in to 4 quarters and pool each of them. (4,1) will divide the 
-#                                               #first layer in to 16th pieces and pool each of them
-# print "Uniform DeSTIN with Clustering"
-# algorithm_choice = 'Clustering'
-# alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
-#              'CENTS': [], 'node_id': [],
-#              'num_cents_per_layer': num_cents_per_layer}
+num_nodes_per_layer = [[8, 8], [4, 4], [2, 2], [1, 1]]
+num_cents_per_layer = [50, 25, 25 ,50]
+pool_size = [(16,1),(2,2),(2,2),(1,1)]        #pooling size: The first number is the number of vector 
+                                              #you want to pool. For example, (64,1) will pool all the 
+                                              #vector in the first layer. (16,1) will divide the first layer 
+                                              #in to 4 quarters and pool each of them. (4,1) will divide the 
+                                              #first layer in to 16th pieces and pool each of them
+print "Uniform DeSTIN with Clustering"
+algorithm_choice = 'Clustering'
+alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
+             'CENTS': [], 'node_id': [],
+             'num_cents_per_layer': num_cents_per_layer}
 # ******************************************************************************************
 
 #Load Data, 10 loads 5 batches in total 50,000
 # 1 to 5 load batch_1 to batch_5training images, 1 to five
 # Declare a Network Object and load Training Data
 
-# DESTIN = Network( num_layers, algorithm_choice, alg_params, num_nodes_per_layer, cifar_stat , patch_mode, image_type,)
-#, , , , cifar_stat, patch_mode='Adjacent', image_type='Color'
-# DESTIN.setmode(network_mode)
-# DESTIN.set_lowest_layer(0)
+DESTIN = Network( num_layers, algorithm_choice, alg_params, num_nodes_per_layer, cifar_stat , patch_mode, image_type,)
+# , , , , cifar_stat, patch_mode='Adjacent', image_type='Color'
+DESTIN.setmode(network_mode)
+DESTIN.set_lowest_layer(0)
 # Load Data
 # Modify the location of the training data in file "load_data.py"
 
-# data = np.random.rand(5,32*32*3)
+data = np.random.rand(5,32*32*3)
 # Initialize Network; there is is also a layer-wise initialization option
-# DESTIN.init_network()
+DESTIN.init_network()
 
-# train_names=np.arange(0,476,25)
+train_names=np.arange(0,476,25)
 
 #Train the Network
 # print "DeSTIN Training/with out Feature extraction"
@@ -90,46 +90,49 @@ t_0 = time()
 # print "done with destin training network"
 
 # del data
-# print("Loading pickled DeSTIN")
-# DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
+print("Loading pickled DeSTIN")
+DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
 
-# print("DeSTIN running | Feature Extraction over the Training Data")
-# network_mode = False
-# DESTIN.setmode(network_mode)
+print("DeSTIN running | Feature Extraction over the Training Data")
+network_mode = False
+DESTIN.setmode(network_mode)
 
 # Testing it over the training set
 
-# if not os.path.exists('train'):
-#     os.makedirs('train')
+if not os.path.exists('train'):
+    os.makedirs('train')
 
-# counter=0
-# for num in train_names:
-#     data=load_train(num)
-#     for I in range(data.shape[0]):  # For Every image in the data set
-#         counter+=1
-#         if counter % 1000 == 0:
-#             print("Testing Iteration Number : Completed till Image: %d" % counter)
-#         for L in range(DESTIN.number_of_layers):
-#             if L == 0:
-#                 img=data[I][:].reshape(50, 38, 38)
-#                 img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
-#                 img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
-#                 DESTIN.layers[0][L].load_input(img, [4, 4])
-#                 DESTIN.layers[0][L].do_layer_learning()
-#             else:
-#                 DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
-#                 DESTIN.layers[0][L].do_layer_learning()
-#         DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad')             #( maxpool_shape , ignore_border, mode)
-#         if counter in range(199, 50999, 200):
-#             Name = 'train/' + str(counter) + '.txt'
-#             #file_id = open(Name, 'w')
-#             np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
-#             #file_id.close()
-#             # Get rid-off accumulated training beliefs
-#             DESTIN.clean_belief_exporter()
+counter=0
+for num in train_names:
+    data=load_train(num)
+    # for I in range(data.shape[0]):  # For Every image in the data set
+    I=data.shape[0]-1
+        counter+=1
+        print I
+        if counter % 1000 == 0:
+            print("Testing Iteration Number : Completed till Image: %d" % counter)
+        for L in range(DESTIN.number_of_layers):
+            if L == 0:
+                img=data[I][:].reshape(50, 38, 38)
+                img=img.swapaxes(0,1).swapaxes(1,2) ## (38, 38, 50)
+                img=img[3:-3, 3:-3, :]  ## (32, 32, 50)
+                DESTIN.layers[0][L].load_input(img, [4, 4])
+                DESTIN.layers[0][L].do_layer_learning()
+            else:
+                DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
+                DESTIN.layers[0][L].do_layer_learning()
+        DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad')             #( maxpool_shape , ignore_border, mode)
+        # if counter in range(199, 50999, 200):
+        if counter==1:
+            Name = 'train/' + str(50000) + '.txt'
+            #file_id = open(Name, 'w')
+            np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
+            #file_id.close()
+            # Get rid-off accumulated training beliefs
+            DESTIN.clean_belief_exporter()
 
 
-# print("Feature Extraction with the test set")
+print("Feature Extraction with the test set")
 
 # if not os.path.exists('test'):
 #     os.makedirs('test')    
@@ -161,7 +164,7 @@ t_0 = time()
 #             DESTIN.clean_belief_exporter()
 
 # del data
-
+"""
 print "Training With SVM"
 print("Loading training and test labels")
 
@@ -193,6 +196,7 @@ del Temp
 Len = np.shape(trainData)[0]
 Size = np.size(trainData)
 
+print "train data shape: ", trainData.shape
 Width = Len/50000
 print Len
 print Width*50000
@@ -253,4 +257,4 @@ io.savemat('accuracy.mat', eff)
 print "Total time taken: ", time()-t_0
 
 
-
+"""
