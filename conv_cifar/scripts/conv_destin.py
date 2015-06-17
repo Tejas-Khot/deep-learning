@@ -109,7 +109,7 @@ network_mode = False
 DESTIN.setmode(network_mode)
 
 # Testing it over the training set
-
+"""
 if not os.path.exists('train'):
     os.makedirs('train')
 
@@ -142,7 +142,7 @@ for num in train_names[k:]:
             # Get rid-off accumulated training beliefs
             DESTIN.clean_belief_exporter()
         counter+=1
-
+"""
 print("Feature Extraction with the test set")
 
 if not os.path.exists('test'):
@@ -167,7 +167,7 @@ for num in test_names:
                 DESTIN.layers[0][L].load_input(DESTIN.layers[0][L - 1].nodes, [2, 2])
                 DESTIN.layers[0][L].do_layer_learning()
         DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad') 
-        if I in range(199, 10199, 200):
+        if counter in range(199, 10199, 200):
             Name = 'test/' + str(I + 1) + '.txt'
             np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
             # Get rid-off accumulated training beliefs
@@ -190,12 +190,12 @@ del testData
 print("Loading training and testing features")
 
 I = 199
-Name = 'train/' + str(I + 1) + '.txt'
+Name = 'train/' + str(I) + '.txt'
 trainData = np.ravel(np.loadtxt(Name))
 
 
 for I in range(399, 50000, 200):
-    Name = 'train/' + str(I + 1) + '.txt'
+    Name = 'train/' + str(I) + '.txt'
     file_id = open(Name, 'r')
     Temp = np.ravel(np.loadtxt(Name))
     trainData = np.hstack((trainData, Temp))
