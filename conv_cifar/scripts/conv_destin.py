@@ -57,10 +57,9 @@ DESTIN.set_lowest_layer(0)
 # data = np.random.rand(5,32*32*3)
 # Initialize Network; there is is also a layer-wise initialization option
 DESTIN.init_network()
-DESTIN=pickle.load( open( "DESTIN_conv40000", "rb" ) )
 
 train_names=np.arange(0,476,25)
-
+"""
 #Train the Network
 print "DeSTIN Training/with out Feature extraction"
 for epoch in range(5):
@@ -101,8 +100,9 @@ try:
 except:
     print "Could not pickle DeSTIN"    
 print "done with destin training network"
+"""
 
-
+DESTIN=pickle.load( open( "DESTIN_conv", "rb" ) )
 
 print("DeSTIN running | Feature Extraction over the Training Data")
 network_mode = False
@@ -113,9 +113,13 @@ DESTIN.setmode(network_mode)
 if not os.path.exists('train'):
     os.makedirs('train')
 
-counter=0
-for num in train_names:
-    data=load_train(num)
+counter=29800
+k=11
+for num in train_names[k:]:
+    if num==train_names[11]:
+        data=load_train(num)[2300:]
+    else:
+        data=load_train(num)
     for I in range(data.shape[0]):  # For Every image in the data set
         if counter % 1000 == 0:
             print("Testing Iteration Number : Completed till Image: %d" % counter)
