@@ -168,7 +168,7 @@ for num in test_names:
                 DESTIN.layers[0][L].do_layer_learning()
         DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad') 
         if counter in range(199, 10199, 200):
-            Name = 'test/' + str(I + 1) + '.txt'
+            Name = 'test/' + str(counter + 1) + '.txt'
             np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
             # Get rid-off accumulated training beliefs
             DESTIN.clean_belief_exporter()
