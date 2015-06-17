@@ -142,7 +142,7 @@ for num in train_names[k:]:
             # Get rid-off accumulated training beliefs
             DESTIN.clean_belief_exporter()
         counter+=1
-"""
+
 print("Feature Extraction with the test set")
 
 if not os.path.exists('test'):
@@ -175,7 +175,7 @@ for num in test_names:
         counter+=1
 
 del data
-
+"""
 print "Training With SVM"
 print("Loading training and test labels")
 
