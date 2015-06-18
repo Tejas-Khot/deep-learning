@@ -47,8 +47,8 @@ quarters_test=[ whitenedXte[:, 0:whitenedXte.shape[1]/2, 0:whitenedXte.shape[2]/
 del whitenedXtr, whitenedXte
 #zero-centering across individual features and 
 #normalizing the data dimensions so that they are of approximately the same scale
-quarters_train=[ (X-mean)/std for X in [X.reshape(X.shape[0], X.shape[1]*X.shape[2]) for X_ in quarters_train]]
-quarters_test=[ (X-mean)/std for X in [X.reshape(X.shape[0], X.shape[1]*X.shape[2]) for X_ in quarters_test]]		   
+quarters_train=[ (X-mean)/std for X in [X_.reshape(X_.shape[0], X.shape[1]*X_.shape[2]) for X_ in quarters_train]]
+quarters_test=[ (X-mean)/std for X in [X_.reshape(X.shape[0], X_.shape[1]*X_.shape[2]) for X_ in quarters_test]]		   
 
 
 print "[MESSAGE] The data is loaded and pre-processing is over"
