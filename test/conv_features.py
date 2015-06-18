@@ -8,7 +8,7 @@ import time
 import nnet.datasets as ds
 from nnet.convnet import ReLUConvLayer
 from nnet.whitening import ZCA
-from theano import shared
+
 
 t_0=time.time()
 batch_size=100
@@ -56,7 +56,11 @@ quarters_test=[ (quarters_test[i]-mean[i*quarters_test[i].shape[1]:(i+1)*quarter
 
 quarters_train=theano.shared(np.asarray(quarters_train,
                                         dtype='float32'),
-                                        borrow=borrow)
+                                        borrow=True)
+
+quarters_test=theano.shared(np.asarray(quarters_train,
+                                        dtype='float32'),
+                                        borrow=True)
 
 print "[MESSAGE] The data is loaded and pre-processing is over"
 
