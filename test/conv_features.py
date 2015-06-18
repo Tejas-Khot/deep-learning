@@ -34,6 +34,14 @@ del Xtr, Xte, flattenedX, whiteningComponent
 
 whitenedXtr=whitenedXtr.reshape(50000,32,32)
 whitenedXte=whitenedXte.reshape(10000,32,32)
+
+n_train_batches=whitenedXtr.shape[0]/batch_size
+n_test_batches=whitenedXte.shape[0]/batch_size
+
+print "n_train_batches : ", n_train_batches
+print "n_test_batches : ", n_test_batches
+
+
 #dividing the image into 4 quarters each of shape (8,8)
 quarters_train= [ whitenedXtr[:, 0:whitenedXtr.shape[1]/2, 0:whitenedXtr.shape[2]/2],
 			     whitenedXtr[:, 0:whitenedXtr.shape[1]/2, whitenedXtr.shape[2]/2:whitenedXtr.shape[2]],
@@ -58,7 +66,7 @@ quarters_train=theano.shared(np.asarray(quarters_train,
                                         dtype='float32'),
                                         borrow=True)
 
-quarters_test=theano.shared(np.asarray(quarters_train,
+quarters_test=theano.shared(np.asarray(quarters_test,
                                         dtype='float32'),
                                         borrow=True)
 
@@ -85,21 +93,14 @@ extract_test=theano.function(inputs=[idx, idy],
 	                         outputs=layer_0.apply(images),
 	                         givens={X: quarters_test[idx][idy * batch_size: (idy + 1) * batch_size]})
 
-print "Time taken : ", time.time()-t_0
+print "Time taken : ", time.time()-t_0, " seconds"
 print "\nStarting training data feature extraction\n"
 
 
 for q in xrange(0,4):
 	start_time=time.time()
 	print "[QUARTER", q, "]"
-	train_set_x=ds.shared_dataset(quarters_train[q])
-	test_set_x=ds.shared_dataset(quarters_test[q])
 
-	n_train_batches=train_set_x.get_value(borrow=True).shape[0]/batch_size
-	n_test_batches=test_set_x.get_value(borrow=True).shape[0]/batch_size
-
-	print "n_train_batches : ", n_train_batches
-	print "n_test_batches : ", n_test_batches
 
 	features=np.asarray([])  
 	start=str(0)    
