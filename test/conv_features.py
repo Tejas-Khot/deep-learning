@@ -53,6 +53,10 @@ quarters_test=[ X_.reshape(X_.shape[0], X_.shape[1]*X_.shape[2]) for X_ in quart
 quarters_train=[ (quarters_train[i]-mean[i*quarters_train[i].shape[1]:(i+1)*quarters_train[i].shape[1]])/std[i*quarters_train[i].shape[1]:(i+1)*quarters_train[i].shape[1]] for i in xrange(0,4)]		   
 quarters_test=[ (quarters_test[i]-mean[i*quarters_test[i].shape[1]:(i+1)*quarters_test[i].shape[1]])/std[i*quarters_test[i].shape[1]:(i+1)*quarters_test[i].shape[1]] for i in xrange(0,4)]
 
+quarters_train=theano.shared(np.asarray(quarters_train,
+                                        dtype='float32'),
+                                        borrow=borrow)
+
 print "[MESSAGE] The data is loaded and pre-processing is over"
 
 X=T.matrix("data")
