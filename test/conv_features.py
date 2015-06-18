@@ -96,7 +96,7 @@ for q in xrange(0,4):
 	start=str(0)    
 
 	for batch in xrange(0,n_train_batches):
-		batch_img=extract_train(batch)	# (100, 1600, 21, 21)
+		batch_img=extract_train(q,batch)	# (100, 1600, 21, 21)
 		for i in xrange(0, batch_size):
 			temp=batch_img[i].flatten()
 			if not features.size:
@@ -117,7 +117,7 @@ for q in xrange(0,4):
 
 	start_time=time.time()
 	for batch in xrange(0,n_test_batches):
-		batch_img=extract_test(batch)	# (100, 1600, 21, 21)
+		batch_img=extract_test(q,batch)	# (100, 1600, 21, 21)
 		for i in xrange(0, batch_size):
 			temp=batch_img[i].flatten()
 			if not features.size:
