@@ -31,6 +31,8 @@ whitenedXtr=zca.transform(flattenedX)
 whitenedXte=zca.transform(flattenedX_)
 del Xtr, Xte, flattenedX, whiteningComponent
 
+whitenedXtr=whitenedXtr.reshape(50000,32,32)
+whitenedXte=whitenedXte.reshape(10000,32,32)
 #dividing the image into 4 quarters each of shape (8,8)
 quarters_train= [ whitenedXtr[:, 0:whitenedXtr.shape[1]/2, 0:whitenedXtr.shape[2]/2],
 			     whitenedXtr[:, 0:whitenedXtr.shape[1]/2, whitenedXtr.shape[2]/2:whitenedXtr.shape[2]],
