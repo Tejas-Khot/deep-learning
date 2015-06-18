@@ -8,6 +8,7 @@ import time
 import nnet.datasets as ds
 from nnet.convnet import ReLUConvLayer
 from nnet.whitening import ZCA
+from theano import shared
 
 t_0=time.time()
 batch_size=100
