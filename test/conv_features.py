@@ -50,8 +50,8 @@ del whitenedXtr, whitenedXte
 quarters_train=[ X_.reshape(X_.shape[0], X_.shape[1]*X_.shape[2]) for X_ in quarters_train]
 quarters_test=[ X_.reshape(X_.shape[0], X_.shape[1]*X_.shape[2]) for X_ in quarters_test]
 
-quarters_train=[ (X-mean[i*X.shape[1]:(i+1)*X.shape[1]])/std[i*X.shape[1]:(i+1)*X.shape[1]] for i in xrange(0,4)]		   
-quarters_test=[ (X-mean[i*X.shape[1]:(i+1)*X.shape[1]])/std[i*X.shape[1]:(i+1)*X.shape[1]] for i in xrange(0,4)]
+quarters_train=[ (quarters_train[i]-mean[i*quarters_train[i].shape[1]:(i+1)*quarters_train[i].shape[1]])/std[i*quarters_train[i].shape[1]:(i+1)*quarters_train[i].shape[1]] for i in xrange(0,4)]		   
+quarters_test=[ (quarters_test[i]-mean[i*quarters_test[i].shape[1]:(i+1)*quarters_test[i].shape[1]])/std[i*quarters_test[i].shape[1]:(i+1)*quarters_test[i].shape[1]] for i in xrange(0,4)]
 
 print "[MESSAGE] The data is loaded and pre-processing is over"
 
