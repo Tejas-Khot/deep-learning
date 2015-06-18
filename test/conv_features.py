@@ -21,13 +21,14 @@ del Ytr, Yte
 Xtr=np.mean(Xtr, 3)	#shape (50000, 32, 32)
 Xte=np.mean(Xte, 3) #shape (10000, 32, 32)
 
-flattenedX=Xtr.reshape(Xtr.shape[0], Xtr.shape[1]*Xtr.shape[2])	#shape(50000, 256)
+flattenedX=Xtr.reshape(Xtr.shape[0], Xtr.shape[1]*Xtr.shape[2])	#shape(50000, 1024)
+flattenedX_=Xtr.reshape(Xtr.shape[0], Xtr.shape[1]*Xtr.shape[2])	#shape(10000, 1024)
 std=np.std(flattenedX, axis=1)
 mean=np.mean(flattenedX, axis=1) 	
 zca=ZCA()
 whiteningComponent=zca.fit(flattenedX) 
-whitenedXtr=zca.transform(whiteningXtr)
-whitenedXte=zca.transform(whitenedXte)
+whitenedXtr=zca.transform(flattenedX)
+whitenedXte=zca.transform(flattenedX_)
 del Xtr, Xte, flattenedX, whiteningComponent
 
 #dividing the image into 4 quarters each of shape (8,8)
