@@ -26,8 +26,8 @@ std=np.std(flattenedX, axis=1)
 mean=np.mean(flattenedX, axis=1) 	
 zca=ZCA()
 whiteningComponent=zca.fit(flattenedX) 
-whitenedXtr=ZCA.transform(whiteningComponent)
-whitenedXte=ZCA.transform(whitenedXtr)
+whitenedXtr=zca.transform(whiteningXtr)
+whitenedXte=zca.transform(whitenedXte)
 del Xtr, Xte, flattenedX, whiteningComponent
 
 #dividing the image into 4 quarters each of shape (8,8)
