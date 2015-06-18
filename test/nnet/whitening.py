@@ -29,10 +29,3 @@ class ZCA(BaseEstimator, TransformerMixin):
         X_transformed = X - self.mean_
         X_transformed = np.dot(X_transformed, self.components_.T)
         return X_transformed
-
-
-X=np.zeros(shape=(50000,256))
-zca=ZCA().fit(X)
-y=zca.transform(X)
-
-print type(y), np.shape(y)
