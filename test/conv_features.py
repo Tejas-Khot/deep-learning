@@ -114,7 +114,7 @@ for q in xrange(0,4):
 			else:
 				features=np.vstack((features, temp))
 		print "Batch ", batch+1, "\t\t\t\t features size: ", features.shape
-		if (batch+1)%25 == 0:
+		if (batch+1)%10 == 0:
 			pickle.dump(features, open("/home/ubuntu/destin/pickled_cifar/train-"+"Q"+str(q+1)+"-"+start+"-"+str(batch+1)+".p", "wb"))
 			print "----------- Pickled ", str(batch+1), " -----------"
 			start=str(batch+1)
@@ -135,7 +135,7 @@ for q in xrange(0,4):
 			else:
 				features=np.vstack((features, temp))
 		print "Batch ", batch+1, "\t\t\t\t features size: ", features.shape
-		if (batch+1)%25 == 0:
+		if (batch+1)%10 == 0:
 			pickle.dump(features, open("/home/ubuntu/destin/pickled_cifar/test-"+"Q"+str(q+1)+"-"+start+"-"+str(batch+1)+".p", "wb"))
 			print "----------- Pickled ", str(batch+1), " -----------"
 			start=str(batch+1)
