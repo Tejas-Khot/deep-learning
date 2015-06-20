@@ -46,7 +46,7 @@ alg_params = [[inp_size, hid_size], [4 * hid_size, hid_size],
              [4 * hid_size, hid_size], [4 * hid_size, hid_size]]
 #  ******************************************************************************************
 '''
-
+"""
 #Load Data, 10 loads 5 batches in total 50,000
 # 1 to 5 load batch_1 to batch_5training images, 1 to five
 [data, labels] = loadCifar(10)
@@ -90,7 +90,7 @@ for I in range(data.shape[0]):  # For Every image in the data set
 
 pickle.dump( DESTIN, open( "DESTIN_conv_[1000, 75, 50 ,25]", "wb" ) )
 print "done"
-
+"""
 DESTIN=pickle.load( open( "DESTIN_conv_[1000, 75, 50 ,25]", "rb" ) )
 
 
@@ -106,7 +106,7 @@ del labels
 if not os.path.exists('train'):
     os.makedirs('train')
 
-for I in range(data.shape[0]):  # For Every image in the data set
+for I in range(1700,data.shape[0]):  # For Every image in the data set
     if I % 1000 == 0:
         print("Testing Iteration Number %d" % I)
     for L in range(DESTIN.number_of_layers):
