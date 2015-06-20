@@ -68,25 +68,25 @@ DESTIN.init_network()
 
 #Train the Network
 print "DeSTIN Training/with out Feature extraction"
-for epoch in range(5):
-    for I in range(data.shape[0]):  # For Every image in the data set
-        if I % 10000 == 0:
-            print("Training Iteration Number %d" % I)
-        for L in range(DESTIN.number_of_layers):
-            if L == 0:
-                img = data[I][:].reshape(32, 32, 3)
-                # This is equivalent to sharing centroids or kernels
-                DESTIN.layers[0][L].load_input(img, [4, 4])
-                DESTIN.layers[0][L].do_layer_learning()
-                #DESTIN.layers[0][L].shared_learning()
+# for epoch in range(5):
+for I in range(data.shape[0]):  # For Every image in the data set
+    if I % 10000 == 0:
+        print("Training Iteration Number %d" % I)
+    for L in range(DESTIN.number_of_layers):
+        if L == 0:
+            img = data[I][:].reshape(32, 32, 3)
+            # This is equivalent to sharing centroids or kernels
+            DESTIN.layers[0][L].load_input(img, [4, 4])
+            DESTIN.layers[0][L].do_layer_learning()
+            #DESTIN.layers[0][L].shared_learning()
 
-            else:
-                DESTIN.layers[0][L].load_input(
-                    DESTIN.layers[0][L - 1].nodes, [2, 2])
-                DESTIN.layers[0][L].do_layer_learning()
-                #DESTIN.layers[0][L].shared_learning()
-    print "Epoch = " + str(epoch+1)
-    pickle.dump( DESTIN, open("DESTIN_[1000, 75, 50 ,25]", "wb"))
+        else:
+            DESTIN.layers[0][L].load_input(
+                DESTIN.layers[0][L - 1].nodes, [2, 2])
+            DESTIN.layers[0][L].do_layer_learning()
+            #DESTIN.layers[0][L].shared_learning()
+    # print "Epoch = " + str(epoch+1)
+    # pickle.dump( DESTIN, open("DESTIN_[1000, 75, 50 ,25]", "wb"))
 
 pickle.dump( DESTIN, open( "DESTIN_conv_[1000, 75, 50 ,25]", "wb" ) )
 print "done"
