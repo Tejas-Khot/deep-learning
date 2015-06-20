@@ -86,6 +86,8 @@ for epoch in range(5):
                 DESTIN.layers[0][L].do_layer_learning()
                 #DESTIN.layers[0][L].shared_learning()
     print "Epoch = " + str(epoch+1)
+    pickle.dump( DESTIN, open("DESTIN_[1000, 75, 50 ,25]", "wb"))
+
 pickle.dump( DESTIN, open( "DESTIN_conv_[1000, 75, 50 ,25]", "wb" ) )
 print "done"
 
