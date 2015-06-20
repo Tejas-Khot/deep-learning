@@ -106,7 +106,28 @@ del labels
 if not os.path.exists('train'):
     os.makedirs('train')
 
-for I in range(1700,data.shape[0]):  # For Every image in the data set
+for I in range(1600, 2000):  # For Every image in the data set
+    if I % 1000 == 0:
+        print("Testing Iteration Number %d" % I)
+    for L in range(DESTIN.number_of_layers):
+        if L == 0:
+            img = data[I][:].reshape(32, 32, 3)
+            DESTIN.layers[0][L].load_input(img, [4, 4])
+            DESTIN.layers[0][L].do_layer_learning()
+        else:
+            DESTIN.layers[0][L].load_input(
+                DESTIN.layers[0][L - 1].nodes, [2, 2])
+            DESTIN.layers[0][L].do_layer_learning()
+    DESTIN.update_belief_exporter(pool_size, True ,'average_exc_pad')             #( maxpool_shape , ignore_border, mode)
+    if I in range(199, 50999, 200):
+        Name = 'train/' + str(I + 1) + '.txt'
+        #file_id = open(Name, 'w')
+        np.savetxt(Name, np.array(DESTIN.network_belief['belief']))
+        #file_id.close()
+        # Get rid-off accumulated training beliefs
+        DESTIN.clean_belief_exporter()
+
+for I in range(17000, data.shape[0]):  # For Every image in the data set
     if I % 1000 == 0:
         print("Testing Iteration Number %d" % I)
     for L in range(DESTIN.number_of_layers):
