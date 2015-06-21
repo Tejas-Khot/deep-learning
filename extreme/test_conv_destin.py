@@ -6,7 +6,7 @@ from time import time
 from sklearn import svm
 import os
 # *****Define Parameters for the Network and nodes
-
+"""
 # Network Params
 num_layers = 4
 patch_mode = 'Adjacent'
@@ -31,7 +31,7 @@ alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
              'CENTS': [], 'node_id': [],
              'num_cents_per_layer': num_cents_per_layer}
 # ******************************************************************************************
-'''
+
 #  ******************************************************************************************
 
 #           Hierarchy Of AutoEncoders
@@ -45,8 +45,7 @@ hid_size = 100
 alg_params = [[inp_size, hid_size], [4 * hid_size, hid_size],
              [4 * hid_size, hid_size], [4 * hid_size, hid_size]]
 #  ******************************************************************************************
-'''
-"""
+
 #Load Data, 10 loads 5 batches in total 50,000
 # 1 to 5 load batch_1 to batch_5training images, 1 to five
 [data, labels] = loadCifar(10)
@@ -90,7 +89,7 @@ for I in range(data.shape[0]):  # For Every image in the data set
 
 pickle.dump( DESTIN, open( "DESTIN_conv_[1000, 75, 50 ,25]", "wb" ) )
 print "done"
-"""
+
 DESTIN=pickle.load( open( "DESTIN_conv_[1000, 75, 50 ,25]", "rb" ) )
 
 
@@ -154,7 +153,7 @@ for I in range(data.shape[0]):  # For Every image in the data set
         DESTIN.clean_belief_exporter()
 
 
-
+"""
 print "Training With SVM"
 print("Loading training and test labels")
 [trainData, trainLabel] = loadCifar(10)
