@@ -47,6 +47,7 @@ alg_params = [[inp_size, hid_size], [4 * hid_size, hid_size],
              [4 * hid_size, hid_size], [4 * hid_size, hid_size]]
 #  ******************************************************************************************
 """
+"""
 #Load Data, 10 loads 5 batches in total 50,000
 # 1 to 5 load batch_1 to batch_5training images, 1 to five
 [data, labels] = loadCifar(10)
@@ -88,7 +89,7 @@ for epoch in range(5):
     print "Epoch = " + str(epoch+1)
 pickle.dump( DESTIN, open( "DESTIN_conv_[75, 75, 50 ,25]", "wb" ) )
 print "done"
-
+"""
 DESTIN=pickle.load( open( "DESTIN_conv_[75, 75, 50 ,25]", "rb" ) )
 
 
