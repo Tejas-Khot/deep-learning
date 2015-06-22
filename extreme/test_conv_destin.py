@@ -6,7 +6,7 @@ from time import time
 from sklearn import svm
 import os
 # *****Define Parameters for the Network and nodes
-"""
+
 # Network Params
 num_layers = 4
 patch_mode = 'Adjacent'
@@ -19,7 +19,7 @@ network_mode = True
 #                           Incremental Clustering
 #
 num_nodes_per_layer = [[8, 8], [4, 4], [2, 2], [1, 1]]
-num_cents_per_layer = [1000, 75, 50 ,25]
+num_cents_per_layer = [64, 75, 50 ,25]
 pool_size = [(1,1),(1,1),(1,1),(1,1)]         #pooling size: The first number is the number of vector 
                                               #you want to pool. For example, (64,1) will pool all the 
                                               #vector in the first layer. (16,1) will divide the first layer 
@@ -87,10 +87,10 @@ for I in range(data.shape[0]):  # For Every image in the data set
     # print "Epoch = " + str(epoch+1)
     # pickle.dump( DESTIN, open("DESTIN_[1000, 75, 50 ,25]", "wb"))
 
-pickle.dump( DESTIN, open( "DESTIN_conv_[1000, 75, 50 ,25]", "wb" ) )
+pickle.dump( DESTIN, open( "DESTIN_conv_[64, 75, 50 ,25]", "wb" ) )
 print "done"
 
-DESTIN=pickle.load( open( "DESTIN_conv_[1000, 75, 50 ,25]", "rb" ) )
+DESTIN=pickle.load( open( "DESTIN_conv_[64, 75, 50 ,25]", "rb" ) )
 
 
 
@@ -153,7 +153,7 @@ for I in range(data.shape[0]):  # For Every image in the data set
         DESTIN.clean_belief_exporter()
 
 
-"""
+
 print "Training With SVM"
 print("Loading training and test labels")
 [trainData, trainLabel] = loadCifar(10)
