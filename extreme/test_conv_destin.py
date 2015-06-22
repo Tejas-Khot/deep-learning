@@ -1,4 +1,5 @@
-__author__ = 'tejas'
+__author__ = 'mong'
+__author__ = 'teddy'
 from destin.network import *
 from destin.load_data import *
 import cPickle as pickle
@@ -19,7 +20,7 @@ network_mode = True
 #                           Incremental Clustering
 #
 num_nodes_per_layer = [[8, 8], [4, 4], [2, 2], [1, 1]]
-num_cents_per_layer = [64, 75, 50 ,25]
+num_cents_per_layer = [75, 75, 50 ,25]
 pool_size = [(1,1),(1,1),(1,1),(1,1)]         #pooling size: The first number is the number of vector 
                                               #you want to pool. For example, (64,1) will pool all the 
                                               #vector in the first layer. (16,1) will divide the first layer 
@@ -31,7 +32,7 @@ alg_params = {'mr': 0.01, 'vr': 0.01, 'sr': 0.001, 'DIMS': [],
              'CENTS': [], 'node_id': [],
              'num_cents_per_layer': num_cents_per_layer}
 # ******************************************************************************************
-
+"""
 #  ******************************************************************************************
 
 #           Hierarchy Of AutoEncoders
@@ -45,7 +46,7 @@ hid_size = 100
 alg_params = [[inp_size, hid_size], [4 * hid_size, hid_size],
              [4 * hid_size, hid_size], [4 * hid_size, hid_size]]
 #  ******************************************************************************************
-
+"""
 #Load Data, 10 loads 5 batches in total 50,000
 # 1 to 5 load batch_1 to batch_5training images, 1 to five
 [data, labels] = loadCifar(10)
@@ -67,30 +68,28 @@ DESTIN.init_network()
 
 #Train the Network
 print "DeSTIN Training/with out Feature extraction"
-# for epoch in range(5):
-for I in range(data.shape[0]):  # For Every image in the data set
-    if I % 10000 == 0:
-        print("Training Iteration Number %d" % I)
-    for L in range(DESTIN.number_of_layers):
-        if L == 0:
-            img = data[I][:].reshape(32, 32, 3)
-            # This is equivalent to sharing centroids or kernels
-            DESTIN.layers[0][L].load_input(img, [4, 4])
-            DESTIN.layers[0][L].do_layer_learning()
-            #DESTIN.layers[0][L].shared_learning()
+for epoch in range(5):
+    for I in range(data.shape[0]):  # For Every image in the data set
+        if I % 10000 == 0:
+            print("Training Iteration Number %d" % I)
+        for L in range(DESTIN.number_of_layers):
+            if L == 0:
+                img = data[I][:].reshape(32, 32, 3)
+                # This is equivalent to sharing centroids or kernels
+                DESTIN.layers[0][L].load_input(img, [4, 4])
+                DESTIN.layers[0][L].do_layer_learning()
+                #DESTIN.layers[0][L].shared_learning()
 
-        else:
-            DESTIN.layers[0][L].load_input(
-                DESTIN.layers[0][L - 1].nodes, [2, 2])
-            DESTIN.layers[0][L].do_layer_learning()
-            #DESTIN.layers[0][L].shared_learning()
-    # print "Epoch = " + str(epoch+1)
-    # pickle.dump( DESTIN, open("DESTIN_[1000, 75, 50 ,25]", "wb"))
-
-pickle.dump( DESTIN, open( "DESTIN_conv_[64, 75, 50 ,25]", "wb" ) )
+            else:
+                DESTIN.layers[0][L].load_input(
+                    DESTIN.layers[0][L - 1].nodes, [2, 2])
+                DESTIN.layers[0][L].do_layer_learning()
+                #DESTIN.layers[0][L].shared_learning()
+    print "Epoch = " + str(epoch+1)
+pickle.dump( DESTIN, open( "DESTIN_conv_[75, 75, 50 ,25]", "wb" ) )
 print "done"
 
-DESTIN=pickle.load( open( "DESTIN_conv_[64, 75, 50 ,25]", "rb" ) )
+DESTIN=pickle.load( open( "DESTIN_conv_[75, 75, 50 ,25]", "rb" ) )
 
 
 
@@ -105,7 +104,7 @@ del labels
 if not os.path.exists('train'):
     os.makedirs('train')
 
-for I in range(44600, data.shape[0]):  # For Every image in the data set
+for I in range(data.shape[0]):  # For Every image in the data set
     if I % 1000 == 0:
         print("Testing Iteration Number %d" % I)
     for L in range(DESTIN.number_of_layers):
